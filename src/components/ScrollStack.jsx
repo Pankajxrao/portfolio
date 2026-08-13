@@ -270,10 +270,15 @@ const ScrollStack = ({
                 </p>
               </div>
 
-              <div className="flex gap-4">
-                <button className="px-6 py-3 rounded-full bg-white text-black">
+            <div className="flex gap-4">
+                <a
+                  href="https://portfolio-jims.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-black transition-all duration-300 hover:scale-105"
+                >
                   Live Demo
-                </button>
+                </a>
 
          
               </div>
