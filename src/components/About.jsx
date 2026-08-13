@@ -134,7 +134,7 @@ const About = () => {
               "C++",
               "Data Structures",
               "Algorithms",
-              "Competitive Programming",
+              "Tailwind CSS",
               "React",
               "JavaScript",
               "HTML",
