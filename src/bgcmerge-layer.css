@@ -1,0 +1,80 @@
+/*
+  Add this block to your existing App.css (or index.css).
+  Layering model, back to front:
+
+    0       page content (sections, Navbar, Hero text, etc.)
+    9999    .bgcmerge-layer   <- the 3D sphere, always on top, click-through
+    10000   .custom-cursor    <- your cursor dot/ring, on top of the sphere too
+
+  Everything below z-9999 can use its own local stacking (z-0..z-50)
+  without ever fighting the sphere for top billing.
+*/
+
+.bgcmerge-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none; /* critical: lets clicks/scroll pass through to the page */
+}
+
+/* If CustomCursor doesn't already set its own z-index, give it one
+   higher than the sphere so the cursor is never rendered underneath it. */
+.custom-cursor {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* Brutalist Void base tokens — high contrast, near-black, no radius */
+:root {
+  --void-bg: #050505;
+  --void-fg: #f5f5f5;
+  --void-line: rgba(255, 255, 255, 0.12);
+  --void-accent: #f5f5f5; /* keep monochrome; the sphere itself is the accent */
+}
+
+body {
+  background: var(--void-bg);
+  color: var(--void-fg);
+}
+
+/* Brutalist hover convention: invert instead of color-shift */
+.brutal-link {
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: color 0.15s ease;
+}
+.brutal-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+.brutal-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Layout-shift-on-hover, used sparingly for nav items or CTA blocks */
+.brutal-shift {
+  transition: transform 0.2s ease;
+}
+.brutal-shift:hover {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brutal-link::after,
+  .brutal-shift {
+    transition: none !important;
+  }
+}
