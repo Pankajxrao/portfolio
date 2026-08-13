@@ -3,7 +3,7 @@ import { Mail, Code2 } from "lucide-react";
 
 import TargetCursor from "./components/TargetCursor";
 import Navbar from "./components/Navbar";
-import Hero from "./components/hero";
+import Hero from "./components/Hero";
 import About from "./components/About";
 import Work from "./components/Work";
 import Contact from "./components/Contact";
