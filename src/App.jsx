@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Mail, Code2 } from "lucide-react";
+import { Mail, Code2, ArrowUpRight, Terminal } from "lucide-react";
 
 import TargetCursor from "./components/TargetCursor";
 import Navbar from "./components/Navbar";
@@ -75,199 +75,648 @@ const socialLinks = [
 ];
 
 // ─────────────────────────────────────────────
+// Skills
+// ─────────────────────────────────────────────
+
+const skills = [
+  "C++",
+  "C",
+  "JavaScript",
+  "HTML5",
+  "CSS3",
+  "React",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
+  "Mongoose",
+  "JWT",
+  "Git",
+  "GitHub",
+  "OOP",
+  "Data Structures",
+  "Algorithms",
+  "RestApi",
+  "PostMan Api",
+  "Cloudinary"
+];
+
+// ─────────────────────────────────────────────
 // Page Layout
 // ─────────────────────────────────────────────
 
 const PageLayout = ({ children }) => {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen overflow-x-hidden bg-black text-white">
+
       <Navbar />
-      {children}
+
+      {/* Technical background grid */}
+      <div
+        className="
+          pointer-events-none
+          fixed
+          inset-0
+          -z-10
+          opacity-[0.025]
+          [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
+          [background-size:70px_70px]
+        "
+      />
+
+      <div className="relative z-10">
+        {children}
+      </div>
+
     </main>
   );
 };
+
+// ─────────────────────────────────────────────
+// HOME
+// ─────────────────────────────────────────────
+
+const Home = () => {
+  return (
+    <PageLayout>
+
+      {/* ═══════════════════════════════════════
+          HERO
+      ═══════════════════════════════════════ */}
+
+      <section className="relative overflow-hidden bg-black pt-16">
+
+        {/* Status bar */}
+
+        <div className="mx-auto flex max-w-7xl items-center justify-between border-b border-white/10 px-6 py-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 sm:px-10 lg:px-16">
+
+          <div className="flex items-center gap-3">
+
+            <span className="h-2 w-2 animate-pulse rounded-full bg-white" />
+
+            system.online
+
+          </div>
+
+          <span>
+            pankaj.dev / 2026
+          </span>
+
+        </div>
+
+
+        {/* Hero */}
+
+        <div className="relative translate-y-6">
+          <Hero />
+        </div>
+
+
+        {/* Floating weird labels */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-[5%]
+            top-[30%]
+            hidden
+            rotate-[-7deg]
+            border
+            border-white/20
+            px-4
+            py-2
+            font-mono
+            text-[9px]
+            uppercase
+            tracking-[0.2em]
+            text-white/40
+            lg:block
+          "
+        >
+          coffee.exe running
+        </div>
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            right-[5%]
+            top-[42%]
+            hidden
+            rotate-[6deg]
+            border
+            border-white/20
+            px-4
+            py-2
+            font-mono
+            text-[9px]
+            uppercase
+            tracking-[0.2em]
+            text-white/40
+            lg:block
+          "
+        >
+          bugs detected: probably
+        </div>
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            bottom-[18%]
+            left-[8%]
+            hidden
+            rotate-[4deg]
+            border
+            border-white/10
+            px-4
+            py-2
+            font-mono
+            text-[9px]
+            uppercase
+            tracking-[0.2em]
+            text-white/20
+            lg:block
+          "
+        >
+          compiling personality...
+        </div>
+
+
+        {/* Hero footer */}
+
+        <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-4 border-t border-white/10 px-6 py-6 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-16">
+
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
+            Scroll ↓
+          </span>
+
+          <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+
+            <span>Code</span>
+
+            <span className="text-white/10">/</span>
+
+            <span>Build</span>
+
+            <span className="text-white/10">/</span>
+
+            <span>Break</span>
+
+            <span className="text-white/10">/</span>
+
+            <span>Repeat</span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* ═══════════════════════════════════════
+          WHAT I DO
+      ═══════════════════════════════════════ */}
+
+      <section className="border-t border-white/10 bg-black">
+
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
+
+          <div className="mb-16 grid gap-8 lg:grid-cols-[100px_1fr_auto]">
+
+            <span className="font-mono text-xs text-white/25">
+              01
+            </span>
+
+            <div>
+
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                Current State
+              </p>
+
+              <h2 className="text-5xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
+
+                MAKING
+                <br />
+
+                <span className="text-white/25">
+                  THINGS MAKE SENSE.
+                </span>
+
+              </h2>
+
+            </div>
+
+            <div className="max-w-xs self-end">
+
+              <div className="mb-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">
+
+                <Terminal size={12} />
+
+                dev.log
+
+              </div>
+
+             <p className="ml-64 text-sm leading-7 text-white/40">
+  I like taking confusing problems, breaking them into smaller
+  pieces, and slowly turning them into something that actually
+  works.
+</p>
+
+            </div>
+
+          </div>
+
+
+          <Wcards />
+
+        </div>
+
+      </section>
+
+
+      {/* ═══════════════════════════════════════
+          SKILLS
+      ═══════════════════════════════════════ */}
+
+      <section className="border-t border-white/10 bg-black">
+
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
+
+          <div className="mb-14 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+
+            <div>
+
+              <div className="mb-5 flex items-center gap-4">
+
+                <span className="font-mono text-xs text-white/25">
+                  02
+                </span>
+
+                <span className="h-px w-12 bg-white/20" />
+
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                  Loadout
+                </span>
+
+              </div>
+
+              <h2 className="text-5xl font-semibold tracking-[-0.05em] sm:text-7xl">
+
+                THE
+                <br />
+
+                <span className="text-white/25">
+                  DAMAGE KIT.
+                </span>
+
+              </h2>
+
+            </div>
+
+
+            <div className="max-w-sm">
+
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+                Currently installed
+              </p>
+
+              <p className="mt-3 text-sm leading-7 text-white/40">
+                The languages, frameworks, tools, and fundamentals I'm using
+                while figuring out how to build better software.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          {/* Creepy Buttons — NEVER TOUCHING THESE 😭 */}
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+            {skills.map((skill) => (
+              <CreepyButton key={skill}>
+                {skill}
+              </CreepyButton>
+            ))}
+
+          </div>
+
+
+          <div className="mt-8 flex flex-col justify-between gap-3 border-t border-white/10 pt-5 font-mono text-[9px] uppercase tracking-[0.2em] text-white/25 sm:flex-row">
+
+            <span>
+              16 modules loaded
+            </span>
+
+            <span>
+              status: still installing knowledge
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* ═══════════════════════════════════════
+          PROJECTS
+      ═══════════════════════════════════════ */}
+
+      <section className="border-t border-white/10 bg-black">
+
+        <div className="mx-auto max-w-7xl px-6 pt-24 sm:px-10 lg:px-16">
+
+          <div className="grid gap-8 lg:grid-cols-[100px_1fr_auto]">
+
+            <span className="font-mono text-xs text-white/25">
+              03
+            </span>
+
+            <div>
+
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                Shipped / Experimenting
+              </p>
+
+              <h2 className="text-5xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
+
+                EXPERIMENT
+                <br />
+
+                <span className="text-white/25">
+                  LOG.
+                </span>
+
+              </h2>
+
+            </div>
+
+            <div className="max-w-xs self-end">
+
+              <p className="text-sm leading-7 text-white/40">
+                Projects built to learn something new. Some became products.
+                Some became bugs. All of them taught me something.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div className="mt-12 h-screen w-full bg-black">
+          <ScrollStack />
+        </div>
+
+      </section>
+
+
+      {/* ═══════════════════════════════════════
+          SOCIAL
+      ═══════════════════════════════════════ */}
+
+      <section className="border-t border-white/10 bg-black">
+
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
+
+          <div className="mb-16 grid gap-8 lg:grid-cols-[100px_1fr_auto]">
+
+            <span className="font-mono text-xs text-white/25">
+              04
+            </span>
+
+            <div>
+
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                Signal
+              </p>
+
+              <h2 className="text-5xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
+
+                YOU FOUND
+                <br />
+
+                <span className="text-white/25">
+                  THE SIGNAL.
+                </span>
+
+              </h2>
+
+            </div>
+
+            <p className="max-w-xs self-end text-sm leading-7 text-white/40">
+              GitHub for the code. LeetCode for the suffering. LinkedIn for
+              pretending everything is going according to plan.
+            </p>
+
+          </div>
+
+
+          <LogoLoop
+            logos={socialLinks.map(({ label, href, icon: Icon }) => ({
+              node: (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="
+                    cursor-target
+                    group
+                    flex
+                    h-28
+                    w-28
+                    flex-col
+                    items-center
+                    justify-center
+                    gap-3
+                    border
+                    border-white/10
+                    bg-black
+                    text-white
+                    no-underline
+                    transition-all
+                    duration-300
+                    hover:border-white
+                    hover:bg-white
+                    hover:text-black
+                    sm:h-32
+                    sm:w-32
+                  "
+                >
+
+                  <Icon
+                    size={24}
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  />
+
+                  <span className="font-mono text-[9px] uppercase tracking-[0.15em] sm:text-xs">
+                    {label}
+                  </span>
+
+                </a>
+              ),
+
+              ariaLabel: label,
+            }))}
+
+            speed={80}
+            direction="left"
+            gap={32}
+            pauseOnHover
+            fadeOut
+            ariaLabel="Social links"
+          />
+
+        </div>
+
+      </section>
+
+
+      {/* ═══════════════════════════════════════
+          CONTACT
+      ═══════════════════════════════════════ */}
+
+      <section className="border-t border-white/10 bg-black">
+
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
+
+          <div className="relative overflow-hidden border border-white/10 p-8 sm:p-12 lg:p-20">
+
+            {/* Decorative metadata */}
+
+            <div className="absolute right-6 top-6 font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">
+              connection.request
+            </div>
+
+            <div className="absolute bottom-6 left-6 font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">
+              awaiting_input...
+            </div>
+
+
+            <div className="max-w-5xl">
+
+              <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                05 / Next Move
+              </p>
+
+              <h2 className="text-5xl font-semibold leading-[0.9] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
+
+                GOT
+                <br />
+
+                <span className="text-white/25">
+                  SOMETHING?
+                </span>
+
+              </h2>
+
+
+              <p className="mt-8 max-w-xl text-base leading-7 text-white/40">
+                A project, an interesting problem, a crazy idea, or just a
+                conversation about software — I'm listening.
+              </p>
+
+
+              <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center">
+
+                <a
+                  href="/contact"
+                  className="
+                    cursor-target
+                    group
+                    inline-flex
+                    items-center
+                    justify-center
+                    gap-3
+                    bg-white
+                    px-7
+                    py-4
+                    text-sm
+                    font-medium
+                    text-black
+                    transition-all
+                    duration-300
+                    hover:gap-5
+                  "
+                >
+
+                  Start a conversation
+
+                  <ArrowUpRight
+                    size={18}
+                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  />
+
+                </a>
+
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/25">
+                  signal accepted
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* ═══════════════════════════════════════
+          FOOTER
+      ═══════════════════════════════════════ */}
+
+      <footer className="border-t border-white/10 bg-black">
+
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-6 py-8 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-16">
+
+          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/25">
+
+            PANKAJ YADAV / IIIT UNA
+
+          </div>
+
+
+          <div className="flex flex-wrap gap-5 font-mono text-[9px] uppercase tracking-[0.2em] text-white/25">
+
+            <span>React</span>
+
+            <span>Node.js</span>
+
+            <span>C++</span>
+
+            <span>DSA</span>
+
+            <span>2026</span>
+
+          </div>
+
+        </div>
+
+      </footer>
+
+    </PageLayout>
+  );
+};
+
 
 // ─────────────────────────────────────────────
 // Router
 // ─────────────────────────────────────────────
 
 const router = createBrowserRouter([
-  // ─────────────────────────────────────────────
-  // HOME
-  // ─────────────────────────────────────────────
-
   {
     path: "/",
-    element: (
-      <PageLayout>
-        {/* HERO */}
-
-        <section className="relative bg-black">
-          <Hero />
-        </section>
-
-        {/* WHAT I DO */}
-
-        <section className="border-t border-white/10 bg-black">
-          <div className="mx-auto flex min-h-[80vh] w-full max-w-7xl items-center px-6 py-24 sm:px-10 lg:px-16">
-            <div className="w-full">
-              <div className="mb-12 flex items-center gap-4">
-                <span className="h-px w-10 bg-white" />
-
-                <span className="text-xs font-medium uppercase tracking-[0.25em] text-gray-500">
-                  What I Do
-                </span>
-              </div>
-
-              <Wcards />
-            </div>
-          </div>
-        </section>
-
-        {/* SKILLS */}
-
-        <section className="border-t border-white/10 bg-black">
-          <div className="mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-24 lg:px-16">
-            <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-gray-500">
-                  Technologies
-                </p>
-
-                <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                  Skill Set
-                </h2>
-              </div>
-
-              <p className="max-w-md text-sm leading-6 text-gray-500">
-                Technologies I use to build interfaces, solve problems, and
-                develop modern web applications.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <CreepyButton>JavaScript</CreepyButton>
-              <CreepyButton>HTML</CreepyButton>
-              <CreepyButton>Tailwind CSS</CreepyButton>
-              <CreepyButton>CSS3</CreepyButton>
-              <CreepyButton>React</CreepyButton>
-              <CreepyButton>Git</CreepyButton>
-              <CreepyButton>GitHub</CreepyButton>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURED PROJECTS */}
-
-        <section className="border-t border-white/10 bg-black">
-          <div className="mx-auto w-full max-w-7xl px-6 pt-20 sm:px-10 lg:px-16">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-gray-500">
-                  Selected Work
-                </p>
-
-                <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                  Featured Projects
-                </h2>
-              </div>
-
-              <p className="max-w-md text-sm leading-6 text-gray-500">
-                A selection of projects focused on problem solving, frontend
-                development, and building useful products.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10 h-screen w-full bg-black">
-            <ScrollStack />
-          </div>
-        </section>
-
-        {/* SOCIAL LINKS */}
-
-        <section className="border-t border-white/10 bg-black">
-          <div className="mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-24 lg:px-16">
-            <div className="mb-12">
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-gray-500">
-                Find Me Online
-              </p>
-
-              <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                Connect
-              </h2>
-            </div>
-
-            <LogoLoop
-              logos={socialLinks.map(({ label, href, icon: Icon }) => ({
-                node: (
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="
-                      cursor-target
-                      flex
-                      h-24
-                      w-24
-                      flex-col
-                      items-center
-                      justify-center
-                      gap-3
-                      border
-                      border-white/10
-                      bg-black
-                      text-white
-                      no-underline
-                      transition-all
-                      duration-300
-                      hover:border-white
-                      hover:bg-white
-                      hover:text-black
-                      sm:h-28
-                      sm:w-28
-                    "
-                  >
-                    <Icon size={24} />
-
-                    <span className="text-xs font-medium tracking-wide sm:text-sm">
-                      {label}
-                    </span>
-                  </a>
-                ),
-                ariaLabel: label,
-              }))}
-              speed={80}
-              direction="left"
-              gap={32}
-              pauseOnHover
-              fadeOut
-              ariaLabel="Social links"
-            />
-          </div>
-        </section>
-
-        {/* FOOTER */}
-
-        <footer className="border-t border-white/10 bg-black">
-          <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-16">
-            <p>
-              © {new Date().getFullYear()} Pankaj. All rights reserved.
-            </p>
-
-            <p className="uppercase tracking-[0.2em]">
-              Built with React
-            </p>
-          </div>
-        </footer>
-      </PageLayout>
-    ),
+    element: <Home />,
   },
-
-  // ─────────────────────────────────────────────
-  // ABOUT
-  // ─────────────────────────────────────────────
 
   {
     path: "/about",
@@ -280,10 +729,6 @@ const router = createBrowserRouter([
     ),
   },
 
-  // ─────────────────────────────────────────────
-  // WORK
-  // ─────────────────────────────────────────────
-
   {
     path: "/work",
     element: (
@@ -294,10 +739,6 @@ const router = createBrowserRouter([
       </PageLayout>
     ),
   },
-
-  // ─────────────────────────────────────────────
-  // CONTACT
-  // ─────────────────────────────────────────────
 
   {
     path: "/contact",
@@ -311,6 +752,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 // ─────────────────────────────────────────────
 // APP
 // ─────────────────────────────────────────────
@@ -318,7 +760,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      {/* Target cursor animation */}
+
       <TargetCursor
         targetSelector=".cursor-target"
         spinDuration={2}
@@ -330,6 +772,7 @@ function App() {
       />
 
       <RouterProvider router={router} />
+
     </>
   );
 }

@@ -2,24 +2,26 @@ import React from "react";
 
 const Wcards = () => {
   const cards = [
-    {
-      number: "01",
-      title: "Frontend Development",
-      text: "Building responsive and modern web applications with React.",
-      tech: "React · Tailwind · JavaScript",
-    },
-    {
-      number: "02",
-      title: "Problem Solving",
-      text: "300+ DSA problems solved across competitive programming platforms.",
-      tech: "C++ · DSA · Algorithms",
-    },
-    {
-      number: "03",
-      title: "Continuous Learning",
-      text: "Exploring full-stack development, system design, and new technologies.",
-      tech: "Full Stack · Systems · Learning",
-    },
+  {
+  number: "01",
+  title: "Frontend Development",
+  text: "Building responsive and interactive web interfaces using React, JavaScript, HTML, CSS, and Tailwind CSS.",
+  tech: "React · JavaScript · HTML5 · CSS3 · Tailwind CSS",
+},
+
+{
+  number: "02",
+  title: "Backend Development",
+  text: "Developing RESTful APIs with authentication, database integration, middleware, and modular backend architecture.",
+  tech: "Node.js · Express.js · MongoDB · Mongoose · JWT",
+},
+
+{
+  number: "03",
+  title: "Problem Solving",
+  text: "Strengthening data structures and algorithms through consistent competitive programming practice.",
+  tech: "C++ · DSA · Algorithms · 250+ LeetCode · 2-Star CodeChef",
+},
   ];
 
   return (

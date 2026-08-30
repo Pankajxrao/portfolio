@@ -219,9 +219,9 @@ function Sphere() {
   return (
     <mesh
       ref={meshRef}
-      position={[0.3, 1, 0]}
+      position={[0.65, 0.45, 0]}
     >
-      <icosahedronGeometry args={[2.4, 32]} />
+      <icosahedronGeometry args={[2.35, 32]} />
 
       <shaderMaterial
         ref={materialRef}
@@ -248,11 +248,21 @@ export default function Hero() {
         style={{
           width: "100%",
           height: "100vh",
+          minHeight: "680px",
+          background: "#050505",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="w-64 h-64 rounded-full border border-white/10 animate-pulse" />
-        </div>
+        <div
+          style={{
+            width: "16rem",
+            height: "16rem",
+            borderRadius: "9999px",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+        />
       </div>
     );
   }
@@ -263,20 +273,52 @@ export default function Hero() {
         position: "relative",
         width: "100%",
         height: "100vh",
+        minHeight: "680px",
         overflow: "hidden",
         background: "#050505",
       }}
     >
-      {/* =========================
-          NAME
-      ========================= */}
+      {/* TOP LEFT META */}
 
       <div
         style={{
           position: "absolute",
           left: "7%",
-          top: "18%",
-          zIndex: 20,
+          top: "8%",
+          zIndex: 30,
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          fontFamily: "monospace",
+          fontSize: "9px",
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.32)",
+        }}
+      >
+        <span
+          style={{
+            width: "7px",
+            height: "7px",
+            borderRadius: "50%",
+            background: "#fff",
+            boxShadow: "0 0 12px rgba(255,255,255,0.5)",
+          }}
+        />
+
+        AVAILABLE FOR INTERESTING WORK
+      </div>
+
+      {/* =====================================================
+          NAME
+      ===================================================== */}
+
+      <div
+        style={{
+          position: "absolute",
+          left: "7%",
+          top: "25%",
+          zIndex: 25,
           pointerEvents: "none",
         }}
       >
@@ -286,26 +328,118 @@ export default function Hero() {
           duration={1.4}
           blurAmount={0.4}
         >
-          <h1
+          <div
             style={{
-              fontSize: "clamp(3rem, 10vw, 3rem)",
-              fontFamily:"'Manrope', sans-serif",
-              fontWeight: 600,
-              lineHeight: 0.9,
-              letterSpacing: "-0.06em",
-              margin: 0,
-              color: "#ffffff",
-              whiteSpace: "nowrap",
+              position: "relative",
             }}
           >
-            Pankaj Yadav
-          </h1>
+            {/* identifier */}
+
+            <div
+              style={{
+                marginBottom: "12px",
+                paddingLeft: "3px",
+                fontFamily: "monospace",
+                fontSize: "8px",
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.3)",
+              }}
+            >
+              PNKJ / 001
+            </div>
+
+            {/* PANKAJ */}
+
+            <h1
+              style={{
+                margin: 0,
+                fontFamily: "'Manrope', sans-serif",
+                fontSize: "clamp(3.5rem, 6vw, 4.5rem)",
+                fontWeight: 800,
+                lineHeight: 0.82,
+                letterSpacing: "-0.08em",
+                color: "#ffffff",
+                whiteSpace: "nowrap",
+              }}
+            >
+              PANKAJ
+            </h1>
+
+            {/* YADAV */}
+
+            <div
+              style={{
+                marginTop: "8px",
+                marginLeft: "clamp(1rem, 3vw, 3rem)",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily:
+                    "Georgia, 'Times New Roman', serif",
+                  fontSize: "clamp(3rem, 5vw, 5.5rem)",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  lineHeight: 0.85,
+                  letterSpacing: "-0.065em",
+                  color: "transparent",
+                  WebkitTextStroke:
+                    "1px rgba(255,255,255,0.7)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Yadav
+              </div>
+            </div>
+
+            {/* underline */}
+
+            <div
+              style={{
+                marginTop: "16px",
+                marginLeft: "clamp(1rem, 3vw, 3rem)",
+                width: "120px",
+                height: "1px",
+                background:
+                  "linear-gradient(90deg, rgba(255,255,255,0.6), transparent)",
+              }}
+            />
+
+            {/* descriptor */}
+
+            <div
+              style={{
+                marginTop: "20px",
+                marginLeft: "3px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontFamily: "monospace",
+                fontSize: "8px",
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.25)",
+              }}
+            >
+              <span
+                style={{
+                  width: "22px",
+                  height: "1px",
+                  background:
+                    "rgba(255,255,255,0.25)",
+                }}
+              />
+
+              Developer / Builder
+            </div>
+          </div>
         </GooeyTextReveal>
       </div>
 
-      {/* =========================
+      {/* =====================================================
           SPHERE
-      ========================= */}
+      ===================================================== */}
 
       <div
         style={{
@@ -317,7 +451,7 @@ export default function Hero() {
       >
         <Canvas
           camera={{
-            position: [3,3, 7],
+            position: [3, 3, 7],
             fov: 60,
           }}
           dpr={[1, 2]}
@@ -336,17 +470,64 @@ export default function Hero() {
         </Canvas>
       </div>
 
-      {/* =========================
-          INTRO
-      ========================= */}
+      {/* SPHERE LABEL LEFT */}
+
+      <div
+        style={{
+          position: "absolute",
+          left: "43%",
+          top: "34%",
+          zIndex: 22,
+          pointerEvents: "none",
+          fontFamily: "monospace",
+          fontSize: "8px",
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.22)",
+          transform: "rotate(-90deg)",
+          transformOrigin: "left center",
+        }}
+      >
+        interactive object / 001
+      </div>
+
+      {/* SPHERE LABEL RIGHT */}
 
       <div
         style={{
           position: "absolute",
           right: "8%",
-          bottom: "18%",
-          width: "min(360px, 30vw)",
-          zIndex: 20,
+          top: "27%",
+          zIndex: 22,
+          pointerEvents: "none",
+          fontFamily: "monospace",
+          fontSize: "9px",
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.25)",
+        }}
+      >
+        <div>ROTATION // 0.05</div>
+
+        <div
+          style={{
+            width: "70px",
+            height: "1px",
+            marginTop: "9px",
+            background: "rgba(255,255,255,0.2)",
+          }}
+        />
+      </div>
+
+      {/* INTRO */}
+
+      <div
+        style={{
+          position: "absolute",
+          right: "8%",
+          bottom: "17%",
+          width: "min(390px, 30vw)",
+          zIndex: 25,
           pointerEvents: "none",
         }}
       >
@@ -360,82 +541,157 @@ export default function Hero() {
           <div>
             <div
               style={{
-                fontFamily: "monospace",
-                fontSize: "11px",
-                letterSpacing: "0.25em",
-                color: "rgba(255,255,255,0.45)",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
                 marginBottom: "18px",
+                fontFamily: "monospace",
+                fontSize: "10px",
+                letterSpacing: "0.25em",
+                color: "rgba(255,255,255,0.4)",
                 textTransform: "uppercase",
               }}
             >
-              Frontend Developer
+              <span
+                style={{
+                  width: "24px",
+                  height: "1px",
+                  background:
+                    "rgba(255,255,255,0.4)",
+                }}
+              />
+
+              Frontend / Backend / DSA
             </div>
 
             <p
               style={{
                 margin: 0,
-                fontSize: "clamp(1rem, 1.5vw, 1.35rem)",
+                fontFamily: "'Manrope', sans-serif",
+                fontSize:
+                  "clamp(1rem, 1.4vw, 1.25rem)",
                 lineHeight: 1.5,
                 fontWeight: 300,
-                color: "rgba(255,255,255,0.7)",
+                letterSpacing: "-0.02em",
+                color: "rgba(255,255,255,0.68)",
               }}
             >
-              I build thoughtful digital experiences
-              where design, interaction and technology
-              come together.
+              I like turning strange ideas, difficult
+              problems and too much curiosity into things
+              that actually work.
             </p>
+
+            <div
+              style={{
+                marginTop: "20px",
+                fontFamily: "monospace",
+                fontSize: "8px",
+                letterSpacing: "0.2em",
+                color: "rgba(255,255,255,0.22)",
+                textTransform: "uppercase",
+              }}
+            >
+              currently: building / breaking / learning
+            </div>
           </div>
         </GooeyTextReveal>
       </div>
 
-      {/* =========================
-          SCROLL INDICATOR
-      ========================= */}
+      {/* TOP RIGHT INDEX */}
+
+      <div
+        style={{
+          position: "absolute",
+          right: "8%",
+          top: "11%",
+          zIndex: 25,
+          fontFamily: "monospace",
+          fontSize: "9px",
+          letterSpacing: "0.25em",
+          color: "rgba(255,255,255,0.28)",
+        }}
+      >
+        01 — INTRODUCTION
+      </div>
+
+      {/* SIDE COORDINATES */}
+
+      <div
+        style={{
+          position: "absolute",
+          left: "3%",
+          bottom: "20%",
+          zIndex: 20,
+          writingMode: "vertical-rl",
+          fontFamily: "monospace",
+          fontSize: "8px",
+          letterSpacing: "0.25em",
+          color: "rgba(255,255,255,0.18)",
+          textTransform: "uppercase",
+        }}
+      >
+        31.1048° N / 77.1734° E
+      </div>
+
+      {/* SCROLL */}
 
       <div
         style={{
           position: "absolute",
           left: "7%",
           bottom: "7%",
-          zIndex: 20,
+          zIndex: 25,
           display: "flex",
           alignItems: "center",
           gap: "12px",
           color: "rgba(255,255,255,0.35)",
           fontFamily: "monospace",
-          fontSize: "10px",
+          fontSize: "9px",
           letterSpacing: "0.2em",
         }}
       >
         <span
           style={{
             display: "block",
-            width: "36px",
+            width: "42px",
             height: "1px",
-            background: "rgba(255,255,255,0.3)",
+            background:
+              "rgba(255,255,255,0.3)",
           }}
         />
 
         SCROLL TO EXPLORE
       </div>
 
-      {/* =========================
-          TOP LABEL
-      ========================= */}
+      {/* STATUS */}
 
       <div
         style={{
           position: "absolute",
           right: "8%",
-          top: "12%",
-          zIndex: 20,
-          color: "rgba(255,255,255,0.3)",
+          bottom: "7%",
+          zIndex: 25,
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
           fontFamily: "monospace",
-          fontSize: "10px",
-          letterSpacing: "0.25em",
+          fontSize: "8px",
+          letterSpacing: "0.2em",
+          color: "rgba(255,255,255,0.2)",
+          textTransform: "uppercase",
         }}
       >
-        01 — INTRODUCTION
+        <span
+          style={{
+            width: "5px",
+            height: "5px",
+            borderRadius: "50%",
+            background:
+              "rgba(255,255,255,0.5)",
+          }}
+        />
+
+        SYSTEM / ONLINE
       </div>
     </section>
   );

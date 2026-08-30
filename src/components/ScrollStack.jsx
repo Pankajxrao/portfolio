@@ -40,110 +40,243 @@ const ScrollStack = ({
     if (typeof value === "string" && value.includes("%")) {
       return (parseFloat(value) / 100) * containerHeight;
     }
+
     return parseFloat(value);
   }, []);
 
   const getScrollData = useCallback(() => {
     const scroller = scrollerRef.current;
+
     return {
       scrollTop: scroller.scrollTop,
       containerHeight: scroller.clientHeight,
     };
   }, []);
 
-  const getElementOffset = useCallback((element) => element.offsetTop, []);
+  const getElementOffset = useCallback(
+    (element) => element.offsetTop,
+    [],
+  );
 
   const updateCardTransforms = useCallback(() => {
     if (
       !cardsRef.current.length ||
       isUpdatingRef.current ||
       !scrollerRef.current
-    )
+    ) {
       return;
+    }
 
     isUpdatingRef.current = true;
 
     const { scrollTop, containerHeight } = getScrollData();
-    const stackPositionPx = parsePercentage(stackPosition, containerHeight);
+
+    const stackPositionPx = parsePercentage(
+      stackPosition,
+      containerHeight,
+    );
+
     const scaleEndPositionPx = parsePercentage(
       scaleEndPosition,
       containerHeight,
     );
 
-    const endElement = scrollerRef.current.querySelector(".scroll-stack-end");
-    const endElementTop = endElement ? getElementOffset(endElement) : 0;
+    const endElement =
+      scrollerRef.current.querySelector(".scroll-stack-end");
+
+    const endElementTop = endElement
+      ? getElementOffset(endElement)
+      : 0;
 
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
 
       const cardTop = getElementOffset(card);
-      const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
-      const triggerEnd = cardTop - scaleEndPositionPx;
-      const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
-      const pinEnd = endElementTop - containerHeight / 2;
+
+      const triggerStart =
+        cardTop -
+        stackPositionPx -
+        itemStackDistance * i;
+
+      const triggerEnd =
+        cardTop -
+        scaleEndPositionPx;
+
+      const pinStart =
+        cardTop -
+        stackPositionPx -
+        itemStackDistance * i;
+
+      const pinEnd =
+        endElementTop -
+        containerHeight / 2;
 
       const scaleProgress = calculateProgress(
         scrollTop,
         triggerStart,
         triggerEnd,
       );
-      const targetScale = baseScale + i * itemScale;
-      const scale = 1 - scaleProgress * (1 - targetScale);
-      const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
+
+      const targetScale =
+        baseScale +
+        i * itemScale;
+
+      const scale =
+        1 -
+        scaleProgress *
+          (1 - targetScale);
+
+      const rotation = rotationAmount
+        ? i *
+          rotationAmount *
+          scaleProgress
+        : 0;
 
       let blur = 0;
+
       if (blurAmount) {
         let topCardIndex = 0;
-        for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = getElementOffset(cardsRef.current[j]);
+
+        for (
+          let j = 0;
+          j < cardsRef.current.length;
+          j++
+        ) {
+          const jCardTop =
+            getElementOffset(
+              cardsRef.current[j],
+            );
+
           const jTriggerStart =
-            jCardTop - stackPositionPx - itemStackDistance * j;
-          if (scrollTop >= jTriggerStart) topCardIndex = j;
+            jCardTop -
+            stackPositionPx -
+            itemStackDistance * j;
+
+          if (
+            scrollTop >=
+            jTriggerStart
+          ) {
+            topCardIndex = j;
+          }
         }
+
         if (i < topCardIndex) {
-          blur = Math.max(0, (topCardIndex - i) * blurAmount);
+          blur = Math.max(
+            0,
+            (topCardIndex - i) *
+              blurAmount,
+          );
         }
       }
 
       let translateY = 0;
-      const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
+
+      const isPinned =
+        scrollTop >= pinStart &&
+        scrollTop <= pinEnd;
 
       if (isPinned) {
         translateY =
-          scrollTop - cardTop + stackPositionPx + itemStackDistance * i;
+          scrollTop -
+          cardTop +
+          stackPositionPx +
+          itemStackDistance * i;
       } else if (scrollTop > pinEnd) {
-        translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
+        translateY =
+          pinEnd -
+          cardTop +
+          stackPositionPx +
+          itemStackDistance * i;
       }
 
       const newTransform = {
-        translateY: Math.round(translateY * 100) / 100,
-        scale: Math.round(scale * 1000) / 1000,
-        rotation: Math.round(rotation * 100) / 100,
-        blur: Math.round(blur * 100) / 100,
+        translateY:
+          Math.round(
+            translateY * 100,
+          ) / 100,
+
+        scale:
+          Math.round(
+            scale * 1000,
+          ) / 1000,
+
+        rotation:
+          Math.round(
+            rotation * 100,
+          ) / 100,
+
+        blur:
+          Math.round(
+            blur * 100,
+          ) / 100,
       };
 
-      const last = lastTransformsRef.current.get(i);
+      const last =
+        lastTransformsRef.current.get(i);
+
       const changed =
         !last ||
-        Math.abs(last.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(last.scale - newTransform.scale) > 0.001 ||
-        Math.abs(last.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(last.blur - newTransform.blur) > 0.1;
+        Math.abs(
+          last.translateY -
+            newTransform.translateY,
+        ) > 0.1 ||
+        Math.abs(
+          last.scale -
+            newTransform.scale,
+        ) > 0.001 ||
+        Math.abs(
+          last.rotation -
+            newTransform.rotation,
+        ) > 0.1 ||
+        Math.abs(
+          last.blur -
+            newTransform.blur,
+        ) > 0.1;
 
       if (changed) {
-        card.style.transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
+        card.style.transform = `
+          translate3d(
+            0,
+            ${newTransform.translateY}px,
+            0
+          )
+          scale(${newTransform.scale})
+          rotate(${newTransform.rotation}deg)
+        `;
+
         card.style.filter =
-          newTransform.blur > 0 ? `blur(${newTransform.blur}px)` : "";
-        lastTransformsRef.current.set(i, newTransform);
+          newTransform.blur > 0
+            ? `blur(${newTransform.blur}px)`
+            : "";
+
+        lastTransformsRef.current.set(
+          i,
+          newTransform,
+        );
       }
 
-      if (i === cardsRef.current.length - 1) {
-        const isInView = scrollTop >= pinStart && scrollTop <= pinEnd;
-        if (isInView && !stackCompletedRef.current) {
-          stackCompletedRef.current = true;
+      if (
+        i ===
+        cardsRef.current.length - 1
+      ) {
+        const isInView =
+          scrollTop >= pinStart &&
+          scrollTop <= pinEnd;
+
+        if (
+          isInView &&
+          !stackCompletedRef.current
+        ) {
+          stackCompletedRef.current =
+            true;
+
           onStackComplete?.();
-        } else if (!isInView && stackCompletedRef.current) {
-          stackCompletedRef.current = false;
+        } else if (
+          !isInView &&
+          stackCompletedRef.current
+        ) {
+          stackCompletedRef.current =
+            false;
         }
       }
     });
@@ -164,41 +297,73 @@ const ScrollStack = ({
     getElementOffset,
   ]);
 
-  // Native scroll + rAF loop — no external smooth-scroll library required
   useEffect(() => {
     const loop = () => {
       updateCardTransforms();
-      rafRef.current = requestAnimationFrame(loop);
+
+      rafRef.current =
+        requestAnimationFrame(loop);
     };
-    rafRef.current = requestAnimationFrame(loop);
+
+    rafRef.current =
+      requestAnimationFrame(loop);
+
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) {
+        cancelAnimationFrame(
+          rafRef.current,
+        );
+      }
     };
   }, [updateCardTransforms]);
 
   useLayoutEffect(() => {
-    const scroller = scrollerRef.current;
+    const scroller =
+      scrollerRef.current;
+
     if (!scroller) return;
 
-    const cards = Array.from(scroller.querySelectorAll(".scroll-stack-card"));
+    const cards = Array.from(
+      scroller.querySelectorAll(
+        ".scroll-stack-card",
+      ),
+    );
+
     cardsRef.current = cards;
-    const transformsCache = lastTransformsRef.current;
+
+    const transformsCache =
+      lastTransformsRef.current;
 
     cards.forEach((card, i) => {
-      if (i < cards.length - 1) card.style.marginBottom = `${itemDistance}px`;
-      card.style.willChange = "transform, filter";
-      card.style.transformOrigin = "top center";
-      card.style.backfaceVisibility = "hidden";
+      if (i < cards.length - 1) {
+        card.style.marginBottom =
+          `${itemDistance}px`;
+      }
+
+      card.style.willChange =
+        "transform, filter";
+
+      card.style.transformOrigin =
+        "top center";
+
+      card.style.backfaceVisibility =
+        "hidden";
     });
 
     updateCardTransforms();
 
     return () => {
       cardsRef.current = [];
+
       transformsCache.clear();
-      isUpdatingRef.current = false;
+
+      isUpdatingRef.current =
+        false;
     };
-  }, [itemDistance, updateCardTransforms]);
+  }, [
+    itemDistance,
+    updateCardTransforms,
+  ]);
 
   return (
     <div
@@ -211,48 +376,49 @@ const ScrollStack = ({
       }}
     >
       <div className="scroll-stack-inner pt-[20vh] px-6 sm:px-16 pb-[50rem] min-h-screen">
+
         {/* Card 1 */}
         <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
           <div
             className="
-            group
-            relative
-            w-full
-            h-full
-            transition-transform
-            duration-300
-            hover:rotate-2
+              group
+              relative
+              w-full
+              h-full
+              transition-transform
+              duration-300
+              hover:rotate-2
 
-            before:absolute
-            before:inset-0
-            before:-z-10
-            before:rounded-[40px]
-            before:border-2
-            before:border-white
-            before:bg-zinc-900
-            before:-rotate-3
-            before:-translate-y-[2%]
-            before:transition-all
-            before:duration-300
+              before:absolute
+              before:inset-0
+              before:-z-10
+              before:rounded-[40px]
+              before:border-2
+              before:border-white
+              before:bg-zinc-900
+              before:-rotate-3
+              before:-translate-y-[2%]
+              before:transition-all
+              before:duration-300
 
-            after:absolute
-            after:inset-0
-            after:-z-20
-            after:rounded-[40px]
-            after:border-2
-            after:border-white
-            after:bg-zinc-900
-            after:rotate-3
-            after:translate-y-[2%]
-            after:transition-all
-            after:duration-300
+              after:absolute
+              after:inset-0
+              after:-z-20
+              after:rounded-[40px]
+              after:border-2
+              after:border-white
+              after:bg-zinc-900
+              after:rotate-3
+              after:translate-y-[2%]
+              after:transition-all
+              after:duration-300
 
-            hover:before:-rotate-2
-            hover:before:-translate-y-[3%]
+              hover:before:-rotate-2
+              hover:before:-translate-y-[3%]
 
-            hover:after:rotate-2
-            hover:after:translate-y-[3%]
-          "
+              hover:after:rotate-2
+              hover:after:translate-y-[3%]
+            "
           >
             <div className="w-full h-full rounded-[40px] border-2 border-white bg-zinc-900 p-12 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between">
               <div>
@@ -265,12 +431,13 @@ const ScrollStack = ({
                 </h2>
 
                 <p className="mt-6 text-lg text-zinc-300 max-w-xl">
-                  A modern developer portfolio built with React, Tailwind CSS,
-                  and scroll-driven animation.
+                  A modern developer portfolio built
+                  with React, Tailwind CSS, and
+                  interactive UI animations.
                 </p>
               </div>
 
-            <div className="flex gap-4">
+              <div className="flex gap-4">
                 <a
                   href="https://portfolio-jims.vercel.app/"
                   target="_blank"
@@ -279,8 +446,6 @@ const ScrollStack = ({
                 >
                   Live Demo
                 </a>
-
-         
               </div>
             </div>
           </div>
@@ -290,44 +455,44 @@ const ScrollStack = ({
         <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
           <div
             className="
-            group
-            relative
-            w-full
-            h-full
-            transition-transform
-            duration-300
-            hover:rotate-2
+              group
+              relative
+              w-full
+              h-full
+              transition-transform
+              duration-300
+              hover:rotate-2
 
-            before:absolute
-            before:inset-0
-            before:-z-10
-            before:rounded-[40px]
-            before:border-2
-            before:border-white
-            before:bg-zinc-900
-            before:-rotate-3
-            before:-translate-y-[2%]
-            before:transition-all
-            before:duration-300
+              before:absolute
+              before:inset-0
+              before:-z-10
+              before:rounded-[40px]
+              before:border-2
+              before:border-white
+              before:bg-zinc-900
+              before:-rotate-3
+              before:-translate-y-[2%]
+              before:transition-all
+              before:duration-300
 
-            after:absolute
-            after:inset-0
-            after:-z-20
-            after:rounded-[40px]
-            after:border-2
-            after:border-white
-            after:bg-zinc-900
-            after:rotate-3
-            after:translate-y-[2%]
-            after:transition-all
-            after:duration-300
+              after:absolute
+              after:inset-0
+              after:-z-20
+              after:rounded-[40px]
+              after:border-2
+              after:border-white
+              after:bg-zinc-900
+              after:rotate-3
+              after:translate-y-[2%]
+              after:transition-all
+              after:duration-300
 
-            hover:before:-rotate-2
-            hover:before:-translate-y-[3%]
+              hover:before:-rotate-2
+              hover:before:-translate-y-[3%]
 
-            hover:after:rotate-2
-            hover:after:translate-y-[3%]
-          "
+              hover:after:rotate-2
+              hover:after:translate-y-[3%]
+            "
           >
             <div className="w-full h-full rounded-[40px] border-2 border-white bg-zinc-900 p-12 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between">
               <div>
@@ -336,12 +501,13 @@ const ScrollStack = ({
                 </p>
 
                 <h2 className="text-4xl sm:text-5xl font-bold mt-4">
-                  Clipboard app
+                  Clipboard App
                 </h2>
 
                 <p className="mt-6 text-lg text-zinc-300 max-w-xl">
-                  A full-stack shopping platform with authentication, payments,
-                  and an admin dashboard.
+                  A responsive React application for
+                  creating, viewing, editing, and
+                  managing text snippets.
                 </p>
               </div>
 
@@ -355,6 +521,72 @@ const ScrollStack = ({
                   Live Demo
                 </a>
               </div>
+            </div>
+          </div>
+        </ScrollStackItem>
+
+        {/* Card 3 — YouTube Clone Backend */}
+        <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
+          <div
+            className="
+              group
+              relative
+              w-full
+              h-full
+              transition-transform
+              duration-300
+              hover:rotate-2
+
+              before:absolute
+              before:inset-0
+              before:-z-10
+              before:rounded-[40px]
+              before:border-2
+              before:border-white
+              before:bg-zinc-900
+              before:-rotate-3
+              before:-translate-y-[2%]
+              before:transition-all
+              before:duration-300
+
+              after:absolute
+              after:inset-0
+              after:-z-20
+              after:rounded-[40px]
+              after:border-2
+              after:border-white
+              after:bg-zinc-900
+              after:rotate-3
+              after:translate-y-[2%]
+              after:transition-all
+              after:duration-300
+
+              hover:before:-rotate-2
+              hover:before:-translate-y-[3%]
+
+              hover:after:rotate-2
+              hover:after:translate-y-[3%]
+            "
+          >
+            <div className="w-full h-full rounded-[40px] border-2 border-white bg-zinc-900 p-12 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-widest text-zinc-400">
+                  Featured Project — 03
+                </p>
+
+                <h2 className="text-4xl sm:text-5xl font-bold mt-4">
+                  YouTube Clone Backend
+                </h2>
+
+                <p className="mt-6 text-lg text-zinc-300 max-w-xl">
+                  A RESTful backend for a YouTube-like
+                  platform with JWT authentication,
+                  video management, social features,
+                  and MongoDB analytics.
+                </p>
+              </div>
+
+             
             </div>
           </div>
         </ScrollStackItem>

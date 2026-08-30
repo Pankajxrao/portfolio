@@ -35,25 +35,21 @@ const About = () => {
 
         <div className="grid grid-cols-1 gap-12 border-t border-white/10 pt-12 lg:grid-cols-[180px_1fr]">
 
-          {/* Number */}
-
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gray-600">
               01 / Profile
             </p>
           </div>
 
-          {/* Main Text */}
-
           <div className="max-w-4xl">
 
             <p className="text-2xl font-normal leading-relaxed tracking-tight text-white sm:text-3xl lg:text-4xl">
-              I believe the best engineers aren't just coders —
-              they're{" "}
+              I'm a Computer Science student focused on{" "}
               <span className="text-gray-500">
-                problem solvers
+                building software
               </span>{" "}
-              who think in systems.
+              and improving my problem-solving skills through
+              development and competitive programming.
             </p>
 
           </div>
@@ -79,23 +75,30 @@ const About = () => {
               <span className="text-white">
                 Pankaj
               </span>
-              , a Computer Science student at IIIT Una,
-              passionate about competitive programming, data
-              structures, and building software that actually
-              works under pressure.
+              , a Computer Science & Engineering student at
+              IIIT Una. I'm interested in software development,
+              backend development, and data structures and
+              algorithms.
             </p>
 
             <p className="text-base leading-8 text-gray-400 sm:text-lg">
-              I've spent the last year sharpening my{" "}
+              I've worked with{" "}
               <span className="text-white">
-                C++ skills
+                Node.js, Express.js, MongoDB, Mongoose, React,
+                and JavaScript
               </span>{" "}
-              through competitive programming while also
-              developing my frontend skills with{" "}
+              while building projects including a YouTube-like
+              backend API, a clipboard application, and my
+              personal portfolio.
+            </p>
+
+            <p className="text-base leading-8 text-gray-400 sm:text-lg">
+              Alongside development, I regularly practice{" "}
               <span className="text-white">
-                React
+                Data Structures & Algorithms
               </span>{" "}
-              and modern web technologies.
+              using C++. I've solved 250+ problems on LeetCode
+              and currently hold a 2-Star rating on CodeChef.
             </p>
 
           </div>
@@ -132,13 +135,21 @@ const About = () => {
 
             {[
               "C++",
+              "C",
+              "JavaScript",
+              "React",
+              "HTML5",
+              "CSS3",
+              "Tailwind CSS",
+              "Node.js",
+              "Express.js",
+              "MongoDB",
+              "Mongoose",
+              "JWT",
+              "Git",
+              "GitHub",
               "Data Structures",
               "Algorithms",
-              "Tailwind CSS",
-              "React",
-              "JavaScript",
-              "HTML",
-              "CSS",
             ].map((skill, index) => (
               <div
                 key={skill}
@@ -160,7 +171,7 @@ const About = () => {
               >
 
                 <span className="absolute right-5 top-5 text-[10px] tracking-[0.2em] text-gray-700 group-hover:text-gray-400">
-                  0{index + 1}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
 
                 <span className="text-lg font-medium tracking-tight">
@@ -175,21 +186,77 @@ const About = () => {
         </div>
 
         {/* ─────────────────────────────────────
+            ACHIEVEMENTS
+        ───────────────────────────────────── */}
+
+        <div className="mt-24 border-t border-white/10 pt-12">
+
+          <div className="mb-10">
+            <p className="mb-2 text-xs uppercase tracking-[0.25em] text-gray-600">
+              04 / Achievements
+            </p>
+
+            <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">
+              Progress so far
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-3">
+
+            <div className="bg-black p-8">
+              <p className="text-4xl font-semibold tracking-tight">
+                250+
+              </p>
+
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-gray-500">
+                LeetCode Problems
+              </p>
+            </div>
+
+            <div className="bg-black p-8">
+              <p className="text-4xl font-semibold tracking-tight">
+                2★
+              </p>
+
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-gray-500">
+                CodeChef Rating
+              </p>
+            </div>
+
+            <div className="bg-black p-8">
+              <p className="text-4xl font-semibold tracking-tight">
+                8.2
+              </p>
+
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-gray-500">
+                CGPA / 10
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* ─────────────────────────────────────
             PHILOSOPHY
         ───────────────────────────────────── */}
 
         <div className="mt-24 border-y border-white/10 py-16">
 
           <p className="mb-8 text-xs uppercase tracking-[0.25em] text-gray-600">
-            04 / Philosophy
+            05 / Philosophy
           </p>
 
           <p className="max-w-5xl text-3xl font-medium leading-tight tracking-tight sm:text-4xl lg:text-6xl">
-            "Don't just make it work.
+            Build it.
             <span className="text-gray-600">
-              {" "}understand why it works.
+              {" "}Break it.
             </span>
-            "
+            <br />
+            Understand it.
+            <span className="text-gray-600">
+              {" "}Improve it.
+            </span>
           </p>
 
         </div>
@@ -205,7 +272,7 @@ const About = () => {
           </span>
 
           <span>
-            C++ · React · DSA
+            C++ · React · Node.js · DSA
           </span>
 
         </div>

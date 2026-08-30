@@ -3,27 +3,32 @@ import React from "react";
 const projects = [
   {
     number: "01",
-    title: "Personal Portfolio",
+    title: "YouTube Clone Backend API",
     description:
-      "A personal portfolio built with React, Tailwind CSS, GSAP, and modern UI animations.",
-    tags: ["React", "Tailwind CSS", "GSAP"],
-    status: "Building",
+      "A RESTful backend for a YouTube-like platform with JWT authentication, video management, social features, and MongoDB-based analytics.",
+    tags: ["Node.js", "Express.js", "MongoDB", "Mongoose", "JWT"],
+    status: "Completed",
+    github: "https://github.com/pankajxrao/Youtube-clone",
   },
+
   {
     number: "02",
-    title: "Frontend Experiments",
+    title: "Clipboard App",
     description:
-      "A collection of UI experiments and interactive components built while improving my frontend development skills.",
-    tags: ["React", "JavaScript", "CSS"],
-    status: "Ongoing",
+      "A responsive clipboard management application for creating, viewing, editing, and deleting text snippets using reusable React components.",
+    tags: ["React", "JavaScript", "HTML", "CSS"],
+    status: "Completed",
+    github: "https://github.com/Pankajxrao/Paste-app",
   },
+
   {
     number: "03",
-    title: "DSA & Competitive Programming",
+    title: "Portfolio Website",
     description:
-      "Regular problem solving focused on data structures, algorithms, and improving problem-solving skills with C++.",
-    tags: ["C++", "DSA", "Algorithms"],
-    status: "Ongoing",
+      "A responsive personal portfolio built to showcase my projects, technical skills, achievements, and experience with interactive UI elements.",
+    tags: ["React", "JavaScript", "Tailwind CSS", "GSAP"],
+    status: "Building",
+    github: "https://github.com/Pankajxrao/portfolio",
   },
 ];
 
@@ -94,10 +99,16 @@ const Work = () => {
                 </div>
               </div>
 
-              {/* Arrow */}
-              <div className="hidden text-2xl text-gray-600 transition-all duration-300 group-hover:translate-x-2 group-hover:text-white sm:block">
+              {/* GitHub Arrow */}
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} on GitHub`}
+                className="hidden text-2xl text-gray-600 transition-all duration-300 hover:translate-x-2 hover:text-white sm:block"
+              >
                 →
-              </div>
+              </a>
             </article>
           ))}
         </div>
@@ -115,7 +126,7 @@ const Work = () => {
           </div>
 
           <span className="text-xs uppercase tracking-[0.2em] text-gray-600">
-            2026 → 
+            2026 →
           </span>
         </div>
 
