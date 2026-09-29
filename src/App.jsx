@@ -97,7 +97,8 @@ const skills = [
   "Algorithms",
   "RestApi",
   "PostMan Api",
-  "Cloudinary"
+  "Cloudinary",
+  "Typescript"
 ];
 
 // ─────────────────────────────────────────────
