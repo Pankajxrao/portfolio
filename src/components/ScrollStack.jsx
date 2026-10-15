@@ -1,8 +1,9 @@
+
 import { useLayoutEffect, useRef, useCallback, useEffect } from "react";
 
 export const ScrollStackItem = ({ children, itemClassName = "" }) => (
   <div
-    className={`scroll-stack-card relative w-full h-80 my-8 p-12 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.25)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative w-full min-h-80 h-auto my-8 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.25)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: "hidden",
       transformStyle: "preserve-3d",
@@ -40,12 +41,15 @@ const ScrollStack = ({
     if (typeof value === "string" && value.includes("%")) {
       return (parseFloat(value) / 100) * containerHeight;
     }
-
     return parseFloat(value);
   }, []);
 
   const getScrollData = useCallback(() => {
     const scroller = scrollerRef.current;
+
+    if (!scroller) {
+      return { scrollTop: 0, containerHeight: 0 };
+    }
 
     return {
       scrollTop: scroller.scrollTop,
@@ -81,8 +85,9 @@ const ScrollStack = ({
       containerHeight,
     );
 
-    const endElement =
-      scrollerRef.current.querySelector(".scroll-stack-end");
+    const endElement = scrollerRef.current.querySelector(
+      ".scroll-stack-end",
+    );
 
     const endElementTop = endElement
       ? getElementOffset(endElement)
@@ -98,18 +103,14 @@ const ScrollStack = ({
         stackPositionPx -
         itemStackDistance * i;
 
-      const triggerEnd =
-        cardTop -
-        scaleEndPositionPx;
+      const triggerEnd = cardTop - scaleEndPositionPx;
 
       const pinStart =
         cardTop -
         stackPositionPx -
         itemStackDistance * i;
 
-      const pinEnd =
-        endElementTop -
-        containerHeight / 2;
+      const pinEnd = endElementTop - containerHeight / 2;
 
       const scaleProgress = calculateProgress(
         scrollTop,
@@ -117,19 +118,13 @@ const ScrollStack = ({
         triggerEnd,
       );
 
-      const targetScale =
-        baseScale +
-        i * itemScale;
+      const targetScale = baseScale + i * itemScale;
 
       const scale =
-        1 -
-        scaleProgress *
-          (1 - targetScale);
+        1 - scaleProgress * (1 - targetScale);
 
       const rotation = rotationAmount
-        ? i *
-          rotationAmount *
-          scaleProgress
+        ? i * rotationAmount * scaleProgress
         : 0;
 
       let blur = 0;
@@ -137,25 +132,15 @@ const ScrollStack = ({
       if (blurAmount) {
         let topCardIndex = 0;
 
-        for (
-          let j = 0;
-          j < cardsRef.current.length;
-          j++
-        ) {
-          const jCardTop =
-            getElementOffset(
-              cardsRef.current[j],
-            );
+        for (let j = 0; j < cardsRef.current.length; j++) {
+          const jCardTop = getElementOffset(cardsRef.current[j]);
 
           const jTriggerStart =
             jCardTop -
             stackPositionPx -
             itemStackDistance * j;
 
-          if (
-            scrollTop >=
-            jTriggerStart
-          ) {
+          if (scrollTop >= jTriggerStart) {
             topCardIndex = j;
           }
         }
@@ -163,8 +148,7 @@ const ScrollStack = ({
         if (i < topCardIndex) {
           blur = Math.max(
             0,
-            (topCardIndex - i) *
-              blurAmount,
+            (topCardIndex - i) * blurAmount,
           );
         }
       }
@@ -172,8 +156,7 @@ const ScrollStack = ({
       let translateY = 0;
 
       const isPinned =
-        scrollTop >= pinStart &&
-        scrollTop <= pinEnd;
+        scrollTop >= pinStart && scrollTop <= pinEnd;
 
       if (isPinned) {
         translateY =
@@ -190,56 +173,24 @@ const ScrollStack = ({
       }
 
       const newTransform = {
-        translateY:
-          Math.round(
-            translateY * 100,
-          ) / 100,
-
-        scale:
-          Math.round(
-            scale * 1000,
-          ) / 1000,
-
-        rotation:
-          Math.round(
-            rotation * 100,
-          ) / 100,
-
-        blur:
-          Math.round(
-            blur * 100,
-          ) / 100,
+        translateY: Math.round(translateY * 100) / 100,
+        scale: Math.round(scale * 1000) / 1000,
+        rotation: Math.round(rotation * 100) / 100,
+        blur: Math.round(blur * 100) / 100,
       };
 
-      const last =
-        lastTransformsRef.current.get(i);
+      const last = lastTransformsRef.current.get(i);
 
       const changed =
         !last ||
-        Math.abs(
-          last.translateY -
-            newTransform.translateY,
-        ) > 0.1 ||
-        Math.abs(
-          last.scale -
-            newTransform.scale,
-        ) > 0.001 ||
-        Math.abs(
-          last.rotation -
-            newTransform.rotation,
-        ) > 0.1 ||
-        Math.abs(
-          last.blur -
-            newTransform.blur,
-        ) > 0.1;
+        Math.abs(last.translateY - newTransform.translateY) > 0.1 ||
+        Math.abs(last.scale - newTransform.scale) > 0.001 ||
+        Math.abs(last.rotation - newTransform.rotation) > 0.1 ||
+        Math.abs(last.blur - newTransform.blur) > 0.1;
 
       if (changed) {
         card.style.transform = `
-          translate3d(
-            0,
-            ${newTransform.translateY}px,
-            0
-          )
+          translate3d(0, ${newTransform.translateY}px, 0)
           scale(${newTransform.scale})
           rotate(${newTransform.rotation}deg)
         `;
@@ -249,34 +200,18 @@ const ScrollStack = ({
             ? `blur(${newTransform.blur}px)`
             : "";
 
-        lastTransformsRef.current.set(
-          i,
-          newTransform,
-        );
+        lastTransformsRef.current.set(i, newTransform);
       }
 
-      if (
-        i ===
-        cardsRef.current.length - 1
-      ) {
+      if (i === cardsRef.current.length - 1) {
         const isInView =
-          scrollTop >= pinStart &&
-          scrollTop <= pinEnd;
+          scrollTop >= pinStart && scrollTop <= pinEnd;
 
-        if (
-          isInView &&
-          !stackCompletedRef.current
-        ) {
-          stackCompletedRef.current =
-            true;
-
+        if (isInView && !stackCompletedRef.current) {
+          stackCompletedRef.current = true;
           onStackComplete?.();
-        } else if (
-          !isInView &&
-          stackCompletedRef.current
-        ) {
-          stackCompletedRef.current =
-            false;
+        } else if (!isInView && stackCompletedRef.current) {
+          stackCompletedRef.current = false;
         }
       }
     });
@@ -300,149 +235,112 @@ const ScrollStack = ({
   useEffect(() => {
     const loop = () => {
       updateCardTransforms();
-
-      rafRef.current =
-        requestAnimationFrame(loop);
+      rafRef.current = requestAnimationFrame(loop);
     };
 
-    rafRef.current =
-      requestAnimationFrame(loop);
+    rafRef.current = requestAnimationFrame(loop);
 
     return () => {
       if (rafRef.current) {
-        cancelAnimationFrame(
-          rafRef.current,
-        );
+        cancelAnimationFrame(rafRef.current);
       }
     };
   }, [updateCardTransforms]);
 
   useLayoutEffect(() => {
-    const scroller =
-      scrollerRef.current;
-
+    const scroller = scrollerRef.current;
     if (!scroller) return;
 
     const cards = Array.from(
-      scroller.querySelectorAll(
-        ".scroll-stack-card",
-      ),
+      scroller.querySelectorAll(".scroll-stack-card"),
     );
 
     cardsRef.current = cards;
 
-    const transformsCache =
-      lastTransformsRef.current;
+    const transformsCache = lastTransformsRef.current;
 
     cards.forEach((card, i) => {
       if (i < cards.length - 1) {
-        card.style.marginBottom =
-          `${itemDistance}px`;
+        card.style.marginBottom = `${itemDistance}px`;
       }
 
-      card.style.willChange =
-        "transform, filter";
-
-      card.style.transformOrigin =
-        "top center";
-
-      card.style.backfaceVisibility =
-        "hidden";
+      card.style.willChange = "transform, filter";
+      card.style.transformOrigin = "top center";
+      card.style.backfaceVisibility = "hidden";
     });
 
     updateCardTransforms();
 
     return () => {
       cardsRef.current = [];
-
       transformsCache.clear();
-
-      isUpdatingRef.current =
-        false;
+      isUpdatingRef.current = false;
     };
-  }, [
-    itemDistance,
-    updateCardTransforms,
-  ]);
+  }, [itemDistance, updateCardTransforms]);
+
+  const cardStyle = `
+    group relative w-full h-full
+    transition-transform duration-300 hover:rotate-1
+    before:absolute before:inset-0 before:-z-10
+    before:rounded-[40px] before:border-2 before:border-white
+    before:bg-zinc-900 before:-rotate-2
+    before:transition-all before:duration-300
+    after:absolute after:inset-0 after:-z-20
+    after:rounded-[40px] after:border-2 after:border-white
+    after:bg-zinc-900 after:rotate-2
+    after:transition-all after:duration-300
+    hover:before:-rotate-1 hover:after:rotate-1
+  `;
+
+  const innerCardStyle =
+    "relative z-10 w-full min-h-80 h-full rounded-[40px] border-2 border-white bg-zinc-900 p-6 sm:p-8 md:p-10 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between gap-6";
+
+  const titleStyle =
+    "text-3xl sm:text-4xl md:text-5xl font-bold mt-4";
+
+  const descriptionStyle =
+    "mt-4 text-base sm:text-lg text-zinc-300 max-w-xl";
+
+  const labelStyle =
+    "text-xs sm:text-sm uppercase tracking-widest text-zinc-400";
+
+  const demoLinkStyle =
+    "inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-black transition-all duration-300 hover:scale-105";
 
   return (
     <div
       ref={scrollerRef}
-      className="relative w-full h-full overflow-y-auto overflow-x-visible"
+      className="relative w-full h-full overflow-y-auto overflow-x-hidden"
       style={{
         overscrollBehavior: "contain",
         WebkitOverflowScrolling: "touch",
         scrollBehavior: "auto",
       }}
     >
-      <div className="scroll-stack-inner pt-[20vh] px-6 sm:px-16 pb-[50rem] min-h-screen">
-
-        {/* Card 1 */}
+      <div className="scroll-stack-inner pt-[20vh] px-4 sm:px-8 md:px-16 pb-[50rem] min-h-screen">
+        {/* Card 1 — Portfolio Website */}
         <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
-          <div
-            className="
-              group
-              relative
-              w-full
-              h-full
-              transition-transform
-              duration-300
-              hover:rotate-2
-
-              before:absolute
-              before:inset-0
-              before:-z-10
-              before:rounded-[40px]
-              before:border-2
-              before:border-white
-              before:bg-zinc-900
-              before:-rotate-3
-              before:-translate-y-[2%]
-              before:transition-all
-              before:duration-300
-
-              after:absolute
-              after:inset-0
-              after:-z-20
-              after:rounded-[40px]
-              after:border-2
-              after:border-white
-              after:bg-zinc-900
-              after:rotate-3
-              after:translate-y-[2%]
-              after:transition-all
-              after:duration-300
-
-              hover:before:-rotate-2
-              hover:before:-translate-y-[3%]
-
-              hover:after:rotate-2
-              hover:after:translate-y-[3%]
-            "
-          >
-            <div className="w-full h-full rounded-[40px] border-2 border-white bg-zinc-900 p-12 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between">
+          <div className={cardStyle}>
+            <div className={innerCardStyle}>
               <div>
-                <p className="text-sm uppercase tracking-widest text-zinc-400">
-                  Featured Project — 01
-                </p>
+                <p className={labelStyle}>Featured Project — 01</p>
 
-                <h2 className="text-4xl sm:text-5xl font-bold mt-4">
+                <h2 className={titleStyle}>
                   Portfolio Website
                 </h2>
 
-                <p className="mt-6 text-lg text-zinc-300 max-w-xl">
-                  A modern developer portfolio built
-                  with React, Tailwind CSS, and
-                  interactive UI animations.
+                <p className={descriptionStyle}>
+                  A modern developer portfolio built with React,
+                  Tailwind CSS, and interactive UI animations.
                 </p>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <a
                   href="https://portfolio-jims.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-black transition-all duration-300 hover:scale-105"
+                  className={demoLinkStyle}
                 >
                   Live Demo
                 </a>
@@ -451,72 +349,29 @@ const ScrollStack = ({
           </div>
         </ScrollStackItem>
 
-        {/* Card 2 */}
+        {/* Card 2 — Clipboard App */}
         <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
-          <div
-            className="
-              group
-              relative
-              w-full
-              h-full
-              transition-transform
-              duration-300
-              hover:rotate-2
-
-              before:absolute
-              before:inset-0
-              before:-z-10
-              before:rounded-[40px]
-              before:border-2
-              before:border-white
-              before:bg-zinc-900
-              before:-rotate-3
-              before:-translate-y-[2%]
-              before:transition-all
-              before:duration-300
-
-              after:absolute
-              after:inset-0
-              after:-z-20
-              after:rounded-[40px]
-              after:border-2
-              after:border-white
-              after:bg-zinc-900
-              after:rotate-3
-              after:translate-y-[2%]
-              after:transition-all
-              after:duration-300
-
-              hover:before:-rotate-2
-              hover:before:-translate-y-[3%]
-
-              hover:after:rotate-2
-              hover:after:translate-y-[3%]
-            "
-          >
-            <div className="w-full h-full rounded-[40px] border-2 border-white bg-zinc-900 p-12 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between">
+          <div className={cardStyle}>
+            <div className={innerCardStyle}>
               <div>
-                <p className="text-sm uppercase tracking-widest text-zinc-400">
-                  Featured Project — 02
-                </p>
+                <p className={labelStyle}>Featured Project — 02</p>
 
-                <h2 className="text-4xl sm:text-5xl font-bold mt-4">
+                <h2 className={titleStyle}>
                   Clipboard App
                 </h2>
 
-                <p className="mt-6 text-lg text-zinc-300 max-w-xl">
-                  A responsive React application for
-                  creating, viewing, editing, and
-                  managing text snippets.
+                <p className={descriptionStyle}>
+                  A responsive React application for creating,
+                  viewing, editing, and managing text snippets.
                 </p>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <a
                   href="https://paste-app-p.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-black transition-all duration-300 hover:scale-105"
+                  className={demoLinkStyle}
                 >
                   Live Demo
                 </a>
@@ -527,66 +382,58 @@ const ScrollStack = ({
 
         {/* Card 3 — YouTube Clone Backend */}
         <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
-          <div
-            className="
-              group
-              relative
-              w-full
-              h-full
-              transition-transform
-              duration-300
-              hover:rotate-2
-
-              before:absolute
-              before:inset-0
-              before:-z-10
-              before:rounded-[40px]
-              before:border-2
-              before:border-white
-              before:bg-zinc-900
-              before:-rotate-3
-              before:-translate-y-[2%]
-              before:transition-all
-              before:duration-300
-
-              after:absolute
-              after:inset-0
-              after:-z-20
-              after:rounded-[40px]
-              after:border-2
-              after:border-white
-              after:bg-zinc-900
-              after:rotate-3
-              after:translate-y-[2%]
-              after:transition-all
-              after:duration-300
-
-              hover:before:-rotate-2
-              hover:before:-translate-y-[3%]
-
-              hover:after:rotate-2
-              hover:after:translate-y-[3%]
-            "
-          >
-            <div className="w-full h-full rounded-[40px] border-2 border-white bg-zinc-900 p-12 text-white shadow-[0_0_30px_rgba(0,0,0,0.25)] flex flex-col justify-between">
+          <div className={cardStyle}>
+            <div className={innerCardStyle}>
               <div>
-                <p className="text-sm uppercase tracking-widest text-zinc-400">
-                  Featured Project — 03
-                </p>
+                <p className={labelStyle}>Featured Project — 03</p>
 
-                <h2 className="text-4xl sm:text-5xl font-bold mt-4">
+                <h2 className={titleStyle}>
                   YouTube Clone Backend
                 </h2>
 
-                <p className="mt-6 text-lg text-zinc-300 max-w-xl">
-                  A RESTful backend for a YouTube-like
-                  platform with JWT authentication,
-                  video management, social features,
-                  and MongoDB analytics.
+                <p className={descriptionStyle}>
+                  A RESTful backend for a YouTube-like platform
+                  with JWT authentication, video management,
+                  social features, and MongoDB analytics.
+                </p>
+              </div>
+            </div>
+          </div>
+        </ScrollStackItem>
+
+        {/* Card 4 — ShareAPlate Food Donation Platform */}
+        <ScrollStackItem itemClassName="bg-transparent shadow-none border-none">
+          <div className={cardStyle}>
+            <div className={innerCardStyle}>
+              <div>
+                <p className={labelStyle}>Featured Project — 04</p>
+
+                <h2 className={titleStyle}>
+                  ShareAPlate
+                </h2>
+
+                <p className={descriptionStyle}>
+                  A food donation platform connecting restaurants
+                  with NGOs to reduce food waste and help communities
+                  in need. Features role-based dashboards, donation
+                  management, and secure authentication.
+                </p>
+
+                <p className="mt-4 text-sm text-zinc-400">
+                  Next.js · TypeScript · MongoDB · Mongoose · JWT
                 </p>
               </div>
 
-             
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="YOUR_LIVE_DEMO_URL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={demoLinkStyle}
+                >
+                  Live Demo
+                </a>
+              </div>
             </div>
           </div>
         </ScrollStackItem>

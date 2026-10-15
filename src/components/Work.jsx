@@ -1,3 +1,4 @@
+
 import React from "react";
 
 const projects = [
@@ -29,6 +30,16 @@ const projects = [
     tags: ["React", "JavaScript", "Tailwind CSS", "GSAP"],
     status: "Building",
     github: "https://github.com/Pankajxrao/portfolio",
+  },
+
+  {
+    number: "04",
+    title: "ShareAPlate — Food Donation Platform",
+    description:
+      "A food donation platform connecting restaurants with NGOs to reduce food waste and help communities in need. Features role-based dashboards, donation management, and secure authentication.",
+    tags: ["Next.js", "TypeScript", "MongoDB", "Mongoose", "JWT"],
+    status: "Completed",
+    github: "https://github.com/Pankajxrao/ngoproject.git",
   },
 ];
 
