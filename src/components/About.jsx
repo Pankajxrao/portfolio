@@ -150,7 +150,8 @@ const About = () => {
               "GitHub",
               "Data Structures",
               "Algorithms",
-              "Typescript"
+              "Typescript",
+              "NextJs"
             ].map((skill, index) => (
               <div
                 key={skill}
