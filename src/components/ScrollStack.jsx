@@ -426,7 +426,7 @@ const ScrollStack = ({
 
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="YOUR_LIVE_DEMO_URL"
+                  href="https://ngoproject-beta.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={demoLinkStyle}
